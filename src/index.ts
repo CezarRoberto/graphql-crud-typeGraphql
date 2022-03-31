@@ -4,13 +4,16 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { HelloWorldResolver } from "./resolver/helloWord";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { DataSource } from "typeorm";
+import { MovieResolver } from "./resolver/MovieResolver";
 
 (async () => {
   const app = express();
+  DataSource
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
     schema: await buildSchema({
-      resolvers: [HelloWorldResolver]
+      resolvers: [MovieResolver, HelloWorldResolver]
     }),
     context: ({ req, res }) => ({ req, res }),
   });
